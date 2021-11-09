@@ -1,0 +1,128 @@
+#include<stdio.h> 
+#include<stdlib.h> 
+struct Node 
+{
+int data;
+struct Node* next;
+struct Node* prev;
+};
+struct Node* last = NULL;
+int printLinkedList(struct Node* node)
+{
+struct Node* last;
+ int i=0;
+while (node != NULL) {
+last = node;
+node = node->next;
+}
+ while (last != NULL) {
+ printf(" %d ", last->data);
+ last = last->prev;
+ i++;
+ }
+ return i;
+ 
+}
+void deleteNode(struct Node** head, struct Node* delnode)
+{
+ if (*head == NULL || delnode == NULL)
+ return;
+ if (*head == delnode)
+ *head = delnode->next;
+ if (delnode->next != NULL)
+ delnode->next->prev = delnode->prev;
+ if (delnode->prev != NULL)
+ delnode->prev->next = delnode->next;
+ free(delnode);
+}
+void deleteAt(struct Node** head, int n)
+{
+ if (*head == NULL || n <= 0)
+ return;
+ struct Node* curr = *head;
+ int i;
+ for (int i = 1; curr != NULL && i < n; i++)
+ curr = curr->next;
+ if (curr == NULL)
+ return;
+ deleteNode(head, curr);
+}
+void insertAt(struct Node** head, int data, int pos)
+{
+ int i;
+ struct Node *new_node, *extra;
+ if (head == NULL)
+ {
+ printf (" No data found in the list!\n");
+ }
+ else
+ {
+ extra = *head;
+ i = 0;
+ while (i < pos - 2 && extra != NULL) { extra = extra->next;
+ i++;
+}
+ if (extra != NULL)
+{
+ new_node = (struct Node *) malloc (sizeof (struct Node));
+ new_node->data = data;
+ new_node->next = extra->next;
+ new_node->prev = extra;
+ if (extra->next != NULL)
+ {
+ extra->next->prev = new_node;
+ }
+ extra->next = new_node;
+}
+ else
+{
+ printf ("Invalid position ,Please enter valid position : \n");
+}
+ }
+}
+void addData(struct Node** head, int data)
+{
+struct Node* temp
+= (struct Node*)malloc(sizeof(struct Node));
+temp->data = data;
+temp->next = (*head);
+temp->prev = NULL;
+if ((*head) != NULL)
+(*head)->prev = temp;
+(*head) = temp;
+}
+int main()
+{
+ int pos, data,c, n = 0;
+ //scanf("%d",&n);
+ struct Node* head = NULL; 
+ printf("Enter initial set of data (-1 to stop):");
+ while(1)
+ {
+ scanf("%d",&data);
+ if(data==-1) break;
+ addData(&head, data);
+ 
+ }
+ 
+ printf("Press 1 to print, 2 to add, 3 to delete : ");
+ scanf("%d",&c);
+ if(c==3)
+ {
+ printf("Enter position to delete : ");
+ scanf("%d",&pos);
+ deleteAt(&head,pos);
+ }
+ else if(c==2)
+ {
+ printf("Enter position & data to insert : ");
+ scanf("%d %d",&pos, &data);
+ insertAt(&head, pos, data);
+ }
+ 
+ printf("\nLinked list is: ");
+ int i = printLinkedList(head);
+ printf("\nNumber of nodes : %d",i);
+ return 0;
+ 
+}

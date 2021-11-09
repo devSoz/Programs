@@ -1,0 +1,232 @@
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 20
+
+void enqueue_front (int);
+void enqueue_end (int);
+void dequeue_front (void);
+void dequeue_end (void);
+int isfull (void) ;
+int isempty (void);
+int getFront (void) ;
+int getRear (void) ;
+void display(void);
+
+
+struct queue
+{
+    int arr[MAX];
+    int rear;
+    int front;
+    int size;
+}q;
+
+
+int isfull (void)
+{
+    return ((q.front == 0 && q.rear == q.size-1)||
+            q.front == q.rear+1);
+}
+
+
+int isempty (void)
+{
+        return (q.front == -1);
+}
+
+
+void enqueue_front (int x)
+{ 
+   
+    if(isfull())
+    {
+        printf("\nQueue is full");
+    }
+    else
+    {
+        if (q.front == -1)
+        {
+            q.front = 0;
+            q.rear = 0;
+        }
+        else if (q.front == 0)
+            q.front = q.size - 1 ;
+  
+        else 
+            q.front = q.front - 1;
+    
+        q.arr[q.front] = x ;
+        printf("%d is inserted\n",q.arr[q.front]);
+    }
+    
+}
+
+void enqueue_end(int x)
+{ 
+     if(isfull())
+    {
+        printf("\nQueue is full");
+    }
+    else
+    {
+        if (q.front == -1)
+        {
+            q.front = 0;
+            q.rear = 0;
+        }
+        else if (q.rear == q.size-1)
+            q.rear = 0 ;
+     
+        else 
+            q.rear = q.rear + 1;
+    
+        q.arr[q.rear] = x ;
+        printf("%d is inserted\n",q.arr[q.rear]);
+    }
+    
+}
+
+
+
+            
+void dequeue_front(void)
+{
+    if(isempty())
+    {
+        printf("\nQueue is empty\n");
+    }
+    else
+    {
+        printf("\n%d is deleted\n", q.arr[q.front]);
+        if (q.front == q.rear)
+        {
+            q.front = -1;
+            q.rear = -1;
+        }
+        else if (q.front == q.size -1)
+            q.front = 0;
+        else
+            q.front = q.front+1;
+    }
+}
+
+
+void dequeue_end(void)
+{
+    if(isempty())
+    {
+        printf("\nQueue is empty\n");
+    }
+    else
+    {
+        printf("\n%d is deleted\n", q.arr[q.rear]);
+        if (q.front == q.rear)
+        {
+            q.front = -1;
+            q.rear = -1;
+        }
+        else if (q.rear == 0)
+            q.rear = q.size-1;
+        else
+            q.rear = q.rear-1;
+    }
+}
+
+int getFront(void)
+{
+    if (isempty())
+    {
+        printf("\nQueue is empty\n");
+        return -1 ;
+    }
+    return q.arr[q.front];
+}
+
+int getRear(void)
+{
+    if (isempty() || q.rear<0)
+    {
+        printf("\nQueue is empty\n");
+        return -1 ;
+    }
+    return q.arr[q.rear];
+}
+ 
+
+
+void display(void)
+{
+    int i;
+    if(isempty()==1)
+    {
+        printf("\nQueue is empty\n");
+    }
+    else
+    {
+        printf("\nElements of queue are as follows: ");
+        
+        int front=q.front;
+        if(q.front>q.rear)
+        {
+           for(i=q.front; i<q.size; i++)
+            {
+            printf("%d, ", q.arr[i]);
+            } 
+            front=0;
+        }
+        for(i=front; i<=q.rear; i++)
+        {
+            printf("%d, ", q.arr[i]);
+        }
+    }
+}
+
+
+void main(void)
+{
+    int ch,x;
+    q.rear=-1, q.front = -1;
+    q.size=MAX;
+    
+    
+    do
+    {
+        printf("\n1.Insert at End ");
+        printf("\n2.Insert at Front ");
+        printf("\n3.Delete from End ");
+        printf("\n4.Delete from Front ");
+        printf("\n5.Display ");
+        printf("\n6.Exit");
+        printf("\nEnter your choice: ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+                printf("\nEnter the element: ");
+                scanf("%d",&x);
+                enqueue_end(x);
+                break;
+            case 2:
+                printf("\nEnter the element: ");
+                scanf("%d",&x);
+                enqueue_front(x);
+                break;
+            case 3:
+                dequeue_end();
+                break;
+            case 4:
+                dequeue_front();
+                break;
+            case 5:
+                display();
+                break;
+            case 6:
+                exit(0);
+            default:
+                printf("\n Invalid choice");
+        }
+    }while(ch<=5);
+
+}

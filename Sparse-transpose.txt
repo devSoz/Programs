@@ -1,0 +1,56 @@
+#include <stdio.h>
+void swap(int *a, int *b)
+{
+ int t = *a;
+ *a = *b;
+ *b = t;
+}
+ 
+struct matrix
+{
+ int row, col, val;
+};
+int main()
+{
+ struct matrix a[100], result[100];
+ int t, m, n, x1=0, x2=0, l;
+ int len;
+ printf("Enter number of rows and columns in sparse matrix: "); 
+ scanf("%d %d", &m, &n);
+ printf("Enter number of elements in sparse matrix: "); 
+ scanf("%d", &len);
+ printf("\nEnter sparce matrix: \n"); 
+ for(int j=0; j<len; j++)
+ {
+ scanf("%d %d %d", &a[j].row, &a[j].col, &a[j].val);
+ }
+ 
+ printf("\nTranspose of matrix (sparse form): \n"); 
+ int coln[100], itr[100];
+ itr[0] = 0;
+ for (int i = 1; i <= n; i++)
+ coln[i] = 0;
+ 
+ for (int i = 0; i < len; i++)
+ coln[a[i].col]++;
+ 
+ 
+ for (int i=1; i<=n; i++)
+ itr[i] = itr[i - 1] + coln[i - 1];
+ 
+ for (int i = 0; i < len; i++)
+ {
+ l = itr[a[i].col]++;
+ 
+ result[l].row = a[i].col;
+ result[l].col = a[i].row; 
+ result[l].val = a[i].val;
+ }
+ 
+ for(int i=0; i<len; i++)
+ {
+ printf("%d %d %d \n", result[i].row, result[i].col, result[i].val);
+ }
+ 
+ return 0;
+}

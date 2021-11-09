@@ -1,0 +1,59 @@
+clude<stdlib.h>
+struct Node {
+ int data;
+ struct Node* next;
+ int flag;
+};
+void addData(struct Node** head, int data)
+{
+ struct Node* temp = (struct Node*) malloc(sizeof(struct Node));
+ struct Node *last = *head; 
+ temp->data = data;
+ temp->next = NULL;
+ if (*head == NULL)
+ {
+ *head = temp;
+ return;
+ }
+ while (last->next != NULL)
+ last = last->next;
+ last->next = temp;
+ return;
+}
+void isloop(struct Node* head)
+{
+ int temp = 0;
+ while (head != NULL) 
+ {
+ if (head->flag == 1)
+ {
+ printf("\nIt forms a loop");
+ temp = 1;
+ break;
+ }
+ head->flag = 1;
+ head = head->next;
+ }
+ 
+ if(temp==0)
+ {
+ printf("\nIt does not form a loop");
+ }
+}
+int main()
+{
+ int pos, data,c;
+ struct Node* head = NULL;
+ printf("Enter initial set of data (-1 to stop):");
+ while(1)
+ {
+ scanf("%d",&data);
+ if(data==-1) break;
+ addData(&head,data);
+ }
+ //manually creating a loop
+ head->next->next->next->next = head;
+ 
+ isloop(head);
+ return 0;
+}

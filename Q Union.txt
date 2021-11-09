@@ -1,0 +1,212 @@
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 10
+
+
+enum {
+    INT, FLOAT, STRING
+};
+
+struct Element
+{
+     int type;
+     
+     union 
+     {
+     int i;
+     float f;
+     char str[50];
+    }u;
+};
+
+struct Queue
+{
+    int rear;
+    int front;
+    struct Element arr[MAX];
+}q;
+
+void enqueue (struct Element*);
+void dequeue (void);
+int isfull (void) ;
+int isempty (void);
+void get (int);
+void display(void);
+
+int isfull (void)
+{
+    if(q.rear== MAX -1)
+    {
+        return(1);
+    }
+    else
+    {
+        return(0);
+    }
+}
+
+
+int isempty (void)
+{
+    if(q.front>q.rear)
+    {
+        return(1);
+    }
+    else
+    {
+        return(0);
+    }
+}
+
+
+void enqueue (struct Element *e)
+{ 
+    int x;
+    if(isfull()==1)
+    {
+        printf("\nQueue is full");
+    }
+    else
+    {
+        q.rear=q.rear+1;
+        q.arr[q.rear] = *e;
+         printf("Element inserted\n");
+       // printf("%d is inserted\n",q.arr[q.rear]);
+    }
+}
+
+
+void dequeue (void)
+{
+    if(isempty()==1)
+    {
+        printf("\nQueue is empty\n");
+    }
+    else
+    {
+        printf("The element deleted is: "); 
+        get(q.front);
+        q.front = q.front+1;
+        printf("\n");
+    }
+}
+
+void get(int pos)
+{
+    
+     int eType = q.arr[pos].type;
+     
+    // if (pos==-99)
+     //   pos= q.front;
+        //printf("....%d...",pos);
+     switch(eType)
+     {
+         case 1:
+         {
+             printf("%d", q.arr[pos].u.i);
+             break;
+         }
+         case 2:
+         {
+             //printf("%f", q.arr[pos].u.f);
+             printf("%f", q.arr[pos].u.f);
+             break;
+         }
+         case 3:
+         {
+             printf("%s", q.arr[pos].u.str);
+             break;
+         }
+         default:
+         {
+             printf("%d", q.arr[pos].u.i);
+             break;
+         }
+     } 
+}
+
+void display(void)
+{
+    int i;
+    if(isempty()==1)
+    {
+        printf("\nQueue is empty\n");
+    }
+    else
+    {
+        printf("\nElements of queue are as follows: ");
+        for(i=q.front; i<=q.rear; i++)
+        {
+            get(i);
+            printf(", ");
+        }
+    }
+    printf("\n");
+}
+
+
+void main(void)
+{
+    int ch;
+    q.rear=-1, q.front = 0;
+    
+    do
+    {
+        printf("\n1.Enqueue  2.dequeue  3.display  4.exit");
+        printf("\nEnter your choice: ");
+        scanf("%d",&ch);
+        int eType;
+        switch(ch)
+        {
+            case 1:
+                
+                printf("Enter element type (1-int, 2-float, 3-string): ");
+                scanf("%d", &eType);
+                printf("Enter element: ");
+                
+                struct Element e;
+                switch(eType)
+                {
+                    case 1:
+                    {
+                        e.type = 1;
+                        scanf("%d", &e.u.i);
+                        break;
+                    }
+                    case 2:
+                    {
+                        e.type = 2;
+                        scanf("%f", &e.u.f);
+                        break;
+                    }
+                    case 3:
+                    {
+                        e.type = 3;
+                        scanf("%s", e.u.str);
+                        break;
+                    }
+                    default:
+                    {
+                        e.type = INT;
+                        scanf("%d", &e.u.i);
+                        break;
+                    }
+                }
+                enqueue(&e);
+                break;
+            case 2:
+                dequeue();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("\n Invalid choice");
+        }
+    }while(ch<=4);
+
+}

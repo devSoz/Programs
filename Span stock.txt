@@ -1,0 +1,32 @@
+
+#include <stdio.h>
+void spanStock(int arr[], int n)
+{
+ int j, arrSpan[100];
+ arrSpan[0] = 1;
+ 
+for (int i=1; i<n; i++)
+{
+ arrSpan[i] = 1;
+for (j=(i-1); (j>=0)&&(arr[j]<=temp); j--)
+{
+ arrSpan[i]++;
+}
+}
+for(int i=0; i<n; i++)
+ {
+ printf("%d ", arrSpan[i]);
+ }
+}
+int main()
+{
+ int n, x;
+ scanf("%d", &n);
+ int arr[100];
+ for(int i=0; i<n; i++)
+ {
+ scanf("%d", &arr[i]);
+ }
+ spanStock(arr, n);
+ return 0;
+}

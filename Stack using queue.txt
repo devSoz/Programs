@@ -1,0 +1,158 @@
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 10
+
+
+
+struct queue
+{
+    int arr[MAX];
+    int rear;
+    int front;
+    int size;
+}q1,q2;
+
+void enqueue (struct queue*,int);
+int dequeue (struct queue*);
+int isfull (struct queue*) ;
+int isempty (struct queue*);
+int Top (struct queue*) ;
+void push (int);
+void pop ();
+void display(struct queue*);
+int size;
+
+int isfull (struct queue* q)
+{
+   return((q->rear== MAX -1));
+}
+
+int Top (struct queue* q)
+{
+    if(isempty(q)) return -1;
+    else return q->front;
+
+}
+
+int isempty (struct queue* q)
+{
+    return(q->front>q->rear);
+ }
+
+
+void enqueue (struct queue* q,int x)
+{ 
+    if(isfull(q))
+    {
+        printf("\nStack is full");
+    }
+    else
+    {
+        q->rear=q->rear+1;
+        q->arr[q->rear]=x;
+       // printf("%d is pushed\n",q->arr[q->rear]);
+    }
+    
+    
+}
+
+
+
+int dequeue (struct queue* q)
+{
+    if(isempty(q))
+    {
+        printf("\nStack is empty\n");
+    }
+    else
+    {
+        int i=q->arr[q->front];
+        q->front = q->front+1;
+        return i;
+    }
+}
+
+
+void display(struct queue *q)
+{
+    int i;
+    if(isempty(q)==1)
+    {
+        printf("\nStack is empty\n");
+    }
+    else
+    {
+        printf("\nElements of stack are as follows: ");
+        for(i=q->front; i<=q->rear; i++)
+        {
+            printf("%d, ", q->arr[i]);
+        }
+    }
+}
+
+void pop()
+{
+    
+    if(isempty(&q1))
+        printf("\nStack is empty");
+    else
+    {int element = dequeue(&q1);
+    printf("\n%d is popped\n", element);}
+ 
+ 
+}
+
+void push(int x)
+{
+    while(!isempty(&q1))
+	{
+		int temp = dequeue(&q1);
+		enqueue(&q2,temp);
+	}
+
+    enqueue(&q1,x);
+	
+	while(!isempty(&q2))
+	{
+		int temp = dequeue(&q2);
+		enqueue(&q1,temp);
+	}
+
+  
+    printf("\n%d is pushed\n", x);
+}
+
+
+void main(void)
+{
+    int ch,x;
+    q1.rear=-1, q1.front = 0,size=0, q2.rear=-1, q2.front = 0;
+    
+    do
+    {
+        printf("\n1.Push  2.Pop  3.display  4.exit");
+        printf("\nEnter your choice: ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+                printf("\nEnter the element: ");
+                scanf("%d",&x);
+                push(x);
+                break;
+            case 2:
+                pop();
+                break;
+            case 3:
+                display(&q1);
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("\n Invalid choice");
+        }
+    }while(ch<=4);
+
+}

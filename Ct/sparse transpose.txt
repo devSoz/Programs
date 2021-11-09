@@ -1,0 +1,78 @@
+#include <stdio.h>
+struct matrix
+{
+ int row, col, val;
+};
+
+void swap(int *a, int *b)
+{
+ int t = *a;
+ *a = *b;
+ *b = t;
+}
+
+int main()
+{
+     struct matrix a[50],result[50], b;
+     int t, m, n, x=1;
+     int x1=0, x2=0, l;
+ int len;
+     
+     printf("Enter rows and columns: ");
+     scanf("%d %d", &m, &n);
+     
+     printf("Enter values: \n");
+     for(int i=0; i<m; i++)
+     {
+         for(int j=0; j<n; j++)
+         {
+             scanf("%d", &t);
+             if(t!=0)
+             {
+             a[x].row = i;
+             a[x].col = j;
+             a[x].val = t;
+             x++;
+             }
+         }
+     }
+     a[0].row=m;
+     a[0].col=n;
+     a[0].val=x-1;
+     printf("Sparse matrix: \n          %d %d\n",m, n);
+     for(int i=1; i<x; i++)
+     {
+        printf("matrix[%d] %d %d %d \n", i,a[i].row, a[i].col, a[i].val);
+     }
+     
+     printf("\nTranspose of matrix (sparse form): \n"); 
+ 
+  int arr1[100], arr2[100];
+  for (int i = 1; i<=x; i++)
+        arr1[a[i].row] = 0;
+ for(int i=1; i<x; i++)
+ {
+     arr1[a[i].row]++;
+ }
+ arr2[0] = arr1[0];
+ for(int i=1; i<m; i++)
+ {
+     arr2[i] = arr2[i-1]+arr1[i];
+ }
+ int t2=0;
+ for(int i=0; i<m; i++)
+ {
+   // int t1=t2;
+   
+     for(int j=0; j<arr1[a[i].row]; j++)
+     {
+         printf("%d %d %d \n", a[arr2[i]].row, n-a[arr2[i]].col, a[arr2[i]].val);
+         arr2[i]--;
+     }
+    // t2+=arr1[a[i].row];
+ }
+ 
+
+     return 0;
+}
+

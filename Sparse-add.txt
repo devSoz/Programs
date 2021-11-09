@@ -1,0 +1,79 @@
+#include <stdio.h>
+struct matrix
+{
+ int row, col, val;
+};
+int main()
+{
+ struct matrix a[1000], b[1000], result[1000];
+ int t, m1, n1, x1=0, m2, n2, x2=0, l;
+ int len1, len2;
+ 
+ printf("Enter number of elements in sparse matrix1: "); 
+ scanf("%d", &len1);
+ printf("\nEnter sparce matrix1: \n"); 
+ for(int j=0; j<len1; j++)
+ {
+ scanf("%d %d %d", &a[j].row, &a[j].col, &a[j].val);
+ }
+ 
+ printf("\nEnter number of elements in sparse matrix2: "); 
+ scanf("%d", &len2);
+ printf("Enter sparse matrix2: \n"); 
+ for(int j=0; j<len2; j++)
+ {
+ scanf("%d %d %d", &b[j].row, &b[j].col, &b[j].val);
+ }
+ printf("\n");
+ int p1 = 0, p2 = 0;
+ while ((p1<len1)&&(p2<len2))
+ {
+ if ((a[p1].row>b[p2].row)||((a[p1].row==b[p2].row)&&(a[p1].col>b[p2].col)))
+ {
+ result[l].row = b[p2].row;
+ result[l].col = b[p2].col; 
+ result[l].val = b[p2].val;
+ p2++;
+ }
+ 
+ else if ((a[p1].row<b[p2].row)||((a[p1].row==b[p2].row)&&(a[p1].col<b[p2].col)))
+ {
+ result[l].row = a[p1].row;
+ result[l].col = a[p1].col; 
+ result[l].val = a[p1].val;
+ p1++;
+ }
+ 
+ else
+ {
+ result[l].row = a[p1].row;
+ result[l].col = a[p1].col; 
+ result[l].val = a[p1].val + b[p2].val;; 
+ p2++;
+ p1++;
+ }
+ l++;
+ }
+ 
+ for(int i=p1; i<len1; i++)
+ {
+ result[l].row = a[i].row;
+ result[l].col = a[i].col; 
+ result[l].val = a[i].val;
+ l++;
+ }
+ 
+ for(int i=p2; i<len2; i++)
+ {
+ result[l].row = b[i].row;
+ result[l].col = b[i].col; 
+ result[l].val = b[i].val;
+ l++;
+ }
+ printf("Sum of two matrices: \n"); 
+ for(int i=0; i<l; i++)
+ {
+ printf("%d %d %d \n", result[i].row, result[i].col, result[i].val);
+ }
+ return 0;
+}

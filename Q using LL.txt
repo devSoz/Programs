@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Node 
+{
+	int data;
+	struct Node* next;
+};
+
+
+struct Queue 
+{
+	struct Node *front, *rear;
+};
+
+
+void enqueue(struct Queue* q, int k)
+{
+	struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+	temp->data = k;
+	temp->next = NULL;
+
+	if (q->rear == NULL) {
+		q->front = q->rear = temp;
+				
+	    printf("%d is inserted into the queue\n", k);
+		return;
+	}
+
+	q->rear->next = temp;
+	q->rear = temp;
+		
+	printf("%d is inserted into the queue\n", k);
+}
+
+
+void dequeue(struct Queue* q)
+{
+	if (q->front == NULL)
+	{
+	    printf("Queue is empty\n");
+		return;
+	}
+	struct Node* temp = q->front;
+
+    printf("%d is deleted\n", q->front->data);
+	q->front = q->front->next;
+
+	if (q->front == NULL)
+		q->rear = NULL;
+    
+	free(temp);
+}
+
+
+void display(struct Queue* q)
+{
+    if (q->front == NULL)
+	{
+	    printf("Queue is empty\n");
+		return;
+	}
+	struct Queue* temp = (struct Queue*)malloc(sizeof(struct Queue));
+	temp = q;
+    
+    printf("The elements of queue: ");
+    for( ; temp->front!=NULL; temp->front=temp->front->next)
+    {
+        printf("%d, ", temp->front->data); 
+        //printf("%d, ", q->front->data);
+    }
+    printf("\n");
+
+	free(temp);    
+}
+
+
+int main()
+{
+	struct Queue* q = (struct Queue*)malloc(sizeof(struct Queue));
+	q->front = q->rear = NULL;
+
+	int c;
+    while(1)
+    {
+        printf("\nPress 1-insert, 2-delete, 3-display, others-exit: ");
+        scanf("%d",&c);
+
+        if(c==1)
+        {
+            int x;
+            printf("\nEnter element to be inserted: ");
+            scanf("%d", &x);
+            enqueue(q, x);
+        }
+        else if(c==2)
+        {
+            dequeue(q);
+        }
+        else if(c==3)
+        {
+           display(q);
+        }
+        else
+            break;
+    }
+}

@@ -1,0 +1,39 @@
+#include <stdio.h>
+struct matrix
+{
+ int row, col, val;
+};
+int main()
+{
+ struct matrix a[50], b;
+ int t, m, n, x=1;
+ 
+ 
+ printf("Enter rows and columns: ");
+ scanf("%d %d", &m, &n);
+ 
+ printf("Enter values: \n");
+ for(int i=0; i<m; i++)
+ {
+ for(int j=0; j<n; j++)
+ {
+ scanf("%d", &t);
+ if(t!=0)
+ {
+ a[x].row = i;
+ a[x].col = j;
+ a[x].val = t;
+ x++;
+ }
+ }
+ }
+ a[0].row=m;
+ a[0].col=n;
+ a[0].val=x-1;
+ printf("Sparse matrix: \n");
+ for(int i=0; i<x; i++)
+ {
+ printf("matrix[%d] %d %d %d \n", i,a[i].row, a[i].col, a[i].val);
+ }
+ return 0;
+}

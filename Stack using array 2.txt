@@ -1,0 +1,118 @@
+
+// C program for linked list implementation of stack
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 10
+
+void push (void);
+void pop (void);
+int isfull (void) ;
+int isempty (void);
+void display(void);
+
+
+struct stack
+{
+int it[MAX];
+int top;
+} s;
+
+void main(void)
+{
+int ch;
+s.top=-1;
+
+do
+{
+printf("\n1.push \n 2.pop \n 3.display \n 4.exit\n");
+printf("\n\n Enter your choice\n");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:
+push();
+break;
+case 2:
+pop();
+break;
+case 3:
+display();
+break;
+case 4:
+exit(0);
+default:
+printf("\n invalid choice\n");
+}
+}while(ch<=4);
+
+}
+
+int isfull (void)
+{
+if(s.top== MAX -1)
+{
+return(1);
+}
+else
+{
+return(0);
+}
+}
+
+int isempty (void)
+{
+if(s.top==-1)
+{
+return(1);
+}
+else
+{
+return(0);
+}
+}
+void push (void)
+{ int x;
+if(isfull()==1)
+{
+printf("\n\n stack is full\n");
+}
+else
+{
+s.top=s.top+1;
+printf("\n\nEnter the element\n");
+scanf("%d",&x);
+s.it[s.top]=x;
+printf("\n\n%d is pushed",s.it[s.top]);
+}
+}
+void pop (void)
+{
+if(isempty()==1)
+{
+printf("\n\n stack is empty\n");
+}
+else
+{
+printf("\n\n %d is poped", s.it[s.top]);
+s.top=s.top-1;
+}
+}
+
+void display(void)
+{
+int i;
+if(isempty()==1)
+{
+printf("\n\n stack is empty\n");
+}
+else
+{
+printf("\nElements of stack are as follows\n");
+for(i=s.top;i>=0;i--)
+{
+printf("%d ",s.it[i]);
+}
+}
+}

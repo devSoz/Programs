@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+ int data;
+ struct Node *next;
+};
+
+void addData(struct Node** head, int data)
+{
+    struct Node *temp, *rear;
+    int a, ch;
+    printf("Enter data (at last enter -1 to exit): ");
+    do
+    {
+        scanf("%d", &a);
+        if(a==-1)
+           break;
+        temp = (struct Node *)malloc(sizeof(struct Node));
+        temp->data = a;
+        temp->next = NULL;
+        if (*head == NULL)
+        {
+            *head = temp;
+        }
+        else
+        {
+            rear->next = temp;
+        }
+        rear = temp;
+    } while (1);
+    rear->next = *head;
+}
+
+int rep(struct Node **head, int k)
+{
+     struct Node *p, *q;
+     int i;
+     q = p = *head;
+     while (p->next != p)
+     {
+         for (i = 0; i < k - 1; i++)
+         {
+             q = p;
+             p = p->next;
+         }
+         q->next = p->next;
+         printf("%d has been removed.\n", p->data);
+         free(p);
+         p = q->next;
+     }
+     //*head = p;
+     return (p->data);
+} 
+
+int main()
+{
+     int pos, data,c;
+     struct Node* head = NULL;
+
+         addData(&head,data);
+     
+     int repr, skip;
+     printf("Enter the number of persons to be skipped: ");
+     scanf("%d", &skip);
+     repr = rep(&head, skip);
+     printf("Class representative : %d\n", repr);
+     free(head);
+
+     return 0;
+}

@@ -1,0 +1,142 @@
+#include <stdio.h>
+
+struct matrix
+{
+ int row, col, val;
+};
+
+struct matrix a[1000], b[1000], result[1000],product[1000];
+ int  n2,l=0,len1, len2;
+
+void swap(int *a, int *b)
+{
+ int t = *a;
+ *a = *b;
+ *b = t;
+}
+ 
+
+void transpose()
+{
+   int count[1000];
+   for (int i = 1; i <= n2; i++)
+      count[i] = 0;
+   for (int i = 0; i < len2; i++)
+      count[b[i].col]++;
+ 
+   int index[1000];
+   index[0] = 0;
+   
+   for (int i=1; i<=n2; i++)
+      index[i] = index[i - 1] + count[i - 1];
+   
+   for (int i = 0; i < len2; i++)
+   {
+      l = index[b[i].col]++;
+      
+      result[l].row = b[i].col;
+      result[l].col = b[i].row; 
+      result[l].val = b[i].val;
+   }
+}
+void multiply()
+{
+   
+         
+   int p1=0, p2=0, t2, t1, row, column, sum;
+   l=0;
+    for (p1 = 0; p1 < len1;)
+    {
+   row = a[p1].row;
+   for (p2 = 0; p2 < len2;)
+   {
+      column = result[p2].row;
+      t1 = p1;
+      t2 = p2;
+      sum = 0;
+      while ((t1<len1)&&(a[t1].row==row)&&(t2<len2)&&(result[t2].row==column))
+      {
+         if (a[t1].col<result[t2].col)
+            t1++;
+   
+         else if(a[t1].col>result[t2].col)
+            t2++;
+   
+         else
+         {
+         sum+=a[t1++].val*result[t2++].val;
+         //t1++;
+         //t2++;
+         }
+      }
+      if(sum!=0)
+      {
+      product[l].row = row;
+      product[l].col = column; 
+      product[l].val = sum;
+      l++;
+      }
+   
+      while ((p2<len2)&&(result[p2].row==column))
+         p2++;
+      }
+      while ((p1<len1) &&(a[p1].row==row))
+         p1++;
+       
+      }
+}
+
+int main()
+{
+   
+   int t, m1, n1, x1=0, x2=0,  m2;
+   printf("Enter number of rows and columns in sparse matrix: "); 
+   scanf("%d %d", &m1, &n1);
+ /* m1=4;
+  n1=4;
+  m2=4;
+  n2=4;
+  len1=5;
+  len2=5;*/
+   printf("Enter number of elements in sparse matrix1: "); 
+   scanf("%d", &len1);
+   printf("\nEnter sparce matrix1: \n"); 
+   for(int j=0; j<len1; j++)
+   {
+      scanf("%d %d %d", &a[j].row, &a[j].col, &a[j].val);
+   }
+ 
+   printf("Enter number of rows and columns in sparse matrix: "); 
+   scanf("%d %d", &m2, &n2);
+   printf("\nEnter number of elements in sparse matrix2: "); 
+   scanf("%d", &len2);
+   printf("Enter sparse matrix2: \n"); 
+   for(int j=0; j<len2; j++)
+   {
+      scanf("%d %d %d", &b[j].row, &b[j].col, &b[j].val);
+   }
+ 
+  /*  for(int i=0; i<len2; i++)
+ {
+   printf("%d %d %d \n", b[i].row, b[i].col, b[i].val);
+ }*/
+   
+    
+ transpose();
+/*    for(int i=0; i<len2; i++)
+ {
+   printf("%d %d %d \n", result[i].row, result[i].col, result[i].val);
+ }*/
+    
+    multiply();
+ 
+ printf("\nMultiplicaiton of matrix (sparse form): \n"); 
+  
+ 
+ for(int i=0; i<l; i++)
+ {
+   printf("%d %d %d \n", product[i].row, product[i].col, product[i].val);
+ }
+ 
+ return 0;
+}

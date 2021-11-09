@@ -1,0 +1,96 @@
+#include<stdio.h> 
+#include<stdlib.h> 
+struct Node 
+{
+int data;
+struct Node* next;
+};
+struct Node* last = NULL;
+void reverseLinkedList(int n)
+{
+ int i=0;
+ if (last == NULL)
+ printf("\nEmpty\n");
+ 
+ else 
+ {
+ struct Node* temp;
+ struct Node* temp2;
+ temp = (struct Node*)malloc(sizeof(struct Node));
+ temp2 = (struct Node*)malloc(sizeof(struct Node));
+ temp = last->next;
+ temp2 = temp->next;
+ temp->next = last;
+ last = temp;
+ 
+ while(n>0) 
+ {
+ temp = temp2;
+ temp2 = temp->next;
+ temp->next = last;
+ last = temp;
+ n--;
+ // printf("%d ", temp->data);
+ // temp = temp->next;
+ i++;
+ } //while (temp != last->next);
+ }
+}
+void printLinkedList(int n)
+{
+ int i=0;
+ if (last == NULL)
+ printf("\nEmpty\n");
+ 
+ else 
+ {
+ struct Node* temp;
+ temp = last->next;
+ do 
+ {
+ printf("%d ", temp->data);
+ temp = temp->next;
+ i++;
+ } while (temp != last->next);
+ }
+ printf("\n");
+ // printf("\nNumber of nodes : %d",i );
+}
+void addData(int data)
+{
+ struct Node* temp;
+ temp = (struct Node*)malloc(sizeof(struct Node));
+ if (last == NULL) 
+ {
+ temp->data = data;
+ temp->next = temp;
+ last = temp;
+ }
+ else 
+ {
+ temp->data = data;
+ temp->next = last->next;
+ last->next = temp;
+ last = temp;
+ }
+}
+int main()
+{
+ int pos, data,c, n = 0;
+ //scanf("%d",&n);
+ 
+ printf("Enter initial set of data (-1 to stop):");
+ while(1)
+ {
+ scanf("%d",&data);
+ if(data==-1) break;
+ addData(data);
+ n++;
+ } 
+ 
+ reverseLinkedList(n);
+ 
+ printf("\nReversed Linked list is: ");
+ printLinkedList(n);
+ return 0;
+}

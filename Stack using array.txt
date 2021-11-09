@@ -1,0 +1,79 @@
+
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Stack {
+	int top;
+	unsigned max;
+	int* array;
+};
+
+
+struct Stack* createStack(unsigned max)
+{
+	struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
+	stack->max = max;
+	stack->top = -1;
+	stack->array = (int*)malloc(stack->max * sizeof(int));
+	return stack;
+}
+
+// Stack is full when top is equal to the last index
+int isFull(struct Stack* stack)
+{
+	return stack->top == stack->max - 1;
+}
+
+// Stack is empty when top is equal to -1
+int isEmpty(struct Stack* stack)
+{
+	return stack->top == -1;
+}
+
+// Function to add an item to stack. It increases top by 1
+void push(struct Stack* stack, int item)
+{
+	if (isFull(stack))
+		return;
+	stack->array[++stack->top] = item;
+	printf("%d pushed to stack\n", item);
+}
+
+// Function to remove an item from stack. It decreases top by 1
+int pop(struct Stack* stack)
+{
+	if (isEmpty(stack))
+		return INT_MIN;
+	return stack->array[stack->top--];
+}
+
+// Function to return the top from stack without removing it
+int peek(struct Stack* stack)
+{
+	if (isEmpty(stack))
+		return INT_MIN;
+	return stack->array[stack->top];
+}
+
+// Driver program to test above functions
+int main()
+{
+	struct Stack* stack = createStack(100);
+	int n,a;
+    
+    printf("Enter the number of input : ");  
+    scanf("%d", &n);  
+    printf("\nEnter the elements :\n");  
+    for (int i = 1; i <= n; i++)  
+    {  
+        scanf("%d", &a);  
+    	push(stack, a);
+    }
+
+	printf("%d popped from stack\n", pop(stack));
+	printf("%d Top \n", stack->top );
+
+	return 0;
+}

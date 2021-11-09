@@ -1,0 +1,78 @@
+#include<stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+
+
+void inOrder(struct Node *root)
+{
+    if(root==NULL)
+        return;
+    inOrder(root->left);
+    printf("%d ", root->data);
+    inOrder(root->right);
+}
+
+
+void preOrder(struct Node *root)
+{
+    if(root==NULL)
+        return;
+        
+    printf("%d ", root->data);
+    preOrder(root->left);
+    preOrder(root->right);
+}
+
+
+void postOrder(struct Node *root)
+{
+    if(root==NULL)
+        return;
+        
+    postOrder(root->left);
+    postOrder(root->right);
+    printf("%d ", root->data);
+}
+
+
+struct Node *input()
+{
+    struct Node *temp;
+    int x;
+    printf("Enter data(enter -1 for null): ");
+    scanf(" %d",&x);
+    
+    if(x==-1)
+        return NULL;
+        
+    temp = malloc(sizeof(struct Node));
+    temp->data=x;
+    
+    printf("Left child of %d: \n",x);
+    temp->left = input();
+     
+    printf("Right child of %d: \n",x);
+    temp->right = input();
+    return temp;
+}
+
+int main()
+{
+    struct Node *root;
+    root = malloc(sizeof(struct Node));
+    
+    root = input();
+    
+    printf("\nInorder traversal: \n");
+    inOrder(root);
+    printf("\nPreorder traversal: \n");
+    preOrder(root);
+    printf("\nPostorder traversal: \n");
+    postOrder(root); 
+    return 0;}

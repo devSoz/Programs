@@ -1,0 +1,123 @@
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 10
+
+void enqueue (int);
+void dequeue (void);
+int isfull (void) ;
+int isempty (void);
+void display(void);
+
+
+struct queue
+{
+    int arr[MAX];
+    int rear;
+    int front;
+}q;
+
+
+int isfull (void)
+{
+    if(q.rear== MAX -1)
+    {
+        return(1);
+    }
+    else
+    {
+        return(0);
+    }
+}
+
+
+int isempty (void)
+{
+    if(q.front>=q.rear)
+    {
+        return(1);
+    }
+    else
+    {
+        return(0);
+    }
+}
+
+
+void enqueue (int x)
+{ 
+    if(isfull()==1)
+    {
+        printf("\nQueue is full");
+    }
+    else
+    {
+        q.rear=q.rear+1;
+        q.arr[q.rear]=x;
+        printf("%d is inserted\n",q.arr[q.rear]);
+    }
+}
+
+
+void dequeue (void)
+{
+    if(isempty()==1)
+    {
+        printf("\nQueue is empty\n");
+    }
+    else
+    {
+        printf("\n%d is deleted\n", q.arr[q.front]);
+        q.front = q.front+1;
+    }
+}
+
+
+void display(void)
+{
+    int i;
+    if(isempty()==1)
+    {
+        printf("\nQueue is empty\n");
+    }
+    else
+    {
+        printf("\nElements of queue are as follows: ");
+        for(i=q.front; i<=q.rear; i++)
+        {
+            printf("%d, ", q.arr[i]);
+        }
+    }
+}
+
+
+void main(void)
+{
+    int ch,x;
+    q.rear=-1, q.front = 0;
+    
+    do
+    {
+        printf("\n1.Enqueue  2.dequeue  3.display  4.exit");
+        printf("\nEnter your choice: ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+                printf("\nEnter the element: ");
+                scanf("%d",&x);
+                enqueue(x);
+                break;
+            case 2:
+                dequeue();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("\n Invalid choice");
+        }
+    }while(ch<=4);}
