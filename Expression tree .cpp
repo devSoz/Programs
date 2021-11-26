@@ -46,19 +46,19 @@ void push(struct Stack *stack, Node *node)
 
 Node *pop(struct Stack *stack)
 {
-    Node *temp = new Node ;//= stack->array[stack->top--];
-    temp->data=stack->array[stack->top].data;
-    temp->left=stack->array[stack->top].left;
-    temp->right=stack->array[stack->top].right;
+    Node *temp = new Node; //= stack->array[stack->top--];
+    temp->data = stack->array[stack->top].data;
+    temp->left = stack->array[stack->top].left;
+    temp->right = stack->array[stack->top].right;
     stack->top--;
     return temp;
 }
 
 bool isOperator(char c)
 {
-	if (c == '+' || c == '-' || c == '*' || c == '/' ||	c == '^')
-		return true;
-	return false;
+    if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^')
+        return true;
+    return false;
 }
 
 Node *create(char item)
@@ -74,36 +74,35 @@ void inorder(Node *root)
     if (root == NULL)
         return;
 
-    if(isOperator(root->data))
-        cout<<"(";
+    if (isOperator(root->data))
+        cout << "(";
     inorder(root->left);
-    cout << root->data <<" ";
+    cout << root->data << " ";
     inorder(root->right);
-    if(isOperator(root->data))
-        cout<<")";
+    if (isOperator(root->data))
+        cout << ")";
 }
 
 Node *createExpTree(Node *root, string exp)
 {
-  //  if (root == NULL)
-   //     return root;
+    //  if (root == NULL)
+    //     return root;
     struct Stack *stack = createStack(exp.length());
     for (int i = 0; i < exp.length(); i++)
     {
-      //  cout<<"inside";
+        //  cout<<"inside";
         if (isalpha(exp[i]) || isdigit(exp[i]))
         {
             Node *temp = create(exp[i]);
             push(stack, temp);
-           // cout<<"pushed-> "<<temp->data<<endl;
+            // cout<<"pushed-> "<<temp->data<<endl;
         }
         else
         {
-            
-            
+
             Node *left = pop(stack);
             Node *right = pop(stack);
-            
+
             Node *temp = create(exp[i]);
             temp->left = right;
             temp->right = left;
@@ -128,4 +127,3 @@ int main()
     inorder(root);
     return 0;
 }
-
